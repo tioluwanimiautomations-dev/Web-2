@@ -45,5 +45,5 @@ privacy and terms review (analytics choice, review date, liability wording), Ope
 ## Credits
 
 - Theme: ST AI Agency by StrivioThemes, MIT (see `LICENSE`).
-- Hero photo: "FeAp 92-1a - handset-4975" by Raimond Spekking, CC BY-SA 4.0, via Wikimedia
-  Commons, recoloured (the recoloured version is shared under the same licence). Credited in the footer.
+- Hero photo: "Collection of colorful binders on a shelf for storing documents in an office
+  setting" by Shixart1985, CC BY 2.0, via Wikimedia Commons, recoloured. Credited in the footer.
