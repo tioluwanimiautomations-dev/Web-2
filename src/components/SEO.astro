@@ -93,6 +93,7 @@ const jsonLd = [...siteSchema, ...schema];
 
 <meta name="theme-color" content={siteConfig.seo.themeColor} />
 <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+<link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
 <link rel="sitemap" href={url('/sitemap-index.xml')} />
 
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
