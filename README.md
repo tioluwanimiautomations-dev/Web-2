@@ -45,7 +45,5 @@ privacy and terms review (analytics choice, review date, liability wording), Ope
 ## Credits
 
 - Theme: ST AI Agency by StrivioThemes, MIT (see `LICENSE`).
-- Hero photo: "New York City at night HDR" by Paulo Barcellos Jr., CC BY-SA 2.0, via Wikimedia
-  Commons, recoloured. Credited in the footer.
-- Control section photo: "Apple-iphone-smartphone-desk" by www.Pixel.la Free Stock Photos, CC0,
-  via Wikimedia Commons.
+- Hero photo: "FeAp 92-1a - handset-4975" by Raimond Spekking, CC BY-SA 4.0, via Wikimedia
+  Commons, recoloured (the recoloured version is shared under the same licence). Credited in the footer.
