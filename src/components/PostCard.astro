@@ -1,0 +1,29 @@
+---
+/** A free resource card (ST's post card), opening /resources/<slug>. */
+import Icon from './icons/Icon.astro';
+import ResourceCover from './ResourceCover.astro';
+import { type Resource, statusLabel } from '../utils/resources';
+import { url } from '../utils/url';
+
+interface Props {
+  post: Resource;
+  delay?: number;
+  /** Heading level for the card title. */
+  level?: 'h2' | 'h3';
+}
+
+const { post, delay = 0, level = 'h3' } = Astro.props;
+const Heading = level;
+const href = url(`/resources/${post.id}`);
+---
+
+<article class="post rv" style={delay ? `--d:${delay}ms` : undefined} data-category={post.data.category}>
+  <div class="post__i"><ResourceCover resource={post} /></div>
+  <div class="post__m">
+    <em>{post.data.category}</em>
+    <span>{statusLabel(post)}</span>
+  </div>
+  <Heading class="d4"><a href={href}>{post.data.title}</a></Heading>
+  <p>{post.data.description}</p>
+  <span class="arrow arrow--heat" aria-hidden="true"><span>Open the resource</span><Icon name="arrow-right" /></span>
+</article>

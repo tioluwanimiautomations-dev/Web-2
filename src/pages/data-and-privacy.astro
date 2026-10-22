@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+---
+
+<BaseLayout title="Data and privacy" description="What the PracticeOp intake system keeps, what it never copies, and how conflict checks work.">
+  <PageHero kicker="Data and privacy" title="What the intake system keeps, and what it doesn't." size="d2" breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Data and privacy', href: '/data-and-privacy' }]} />
+  <section class="sec on-cream">
+    <div class="wrap legal">
+      <ul>
+        <li>No call audio is kept. Transcripts and the captured fields only.</li>
+        <li>PracticeOp never copies the firm's client list. Conflict checks query the firm's own practice management system, and only the result (possible match, yes or no) is stored.</li>
+        <li>If a conflict check fails, the lead is marked “conflict check pending” and the attorney clears it before approving. A failed check never counts as “no conflict”.</li>
+        <li>Access to the firm's practice management system is revoked when the firm leaves.</li>
+        <li>Data processing agreement and subprocessor list available on request.</li>
+      </ul>
+    </div>
+  </section>
+  <FinalCTA />
+</BaseLayout>

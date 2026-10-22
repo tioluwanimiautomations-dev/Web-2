@@ -1,0 +1,52 @@
+---
+/** Book a 25-minute intake audit: ST's two-column contact block, with the scheduler in place of the demo form. */
+import Icon from './icons/Icon.astro';
+import Placeholder from './Placeholder.astro';
+import { siteConfig, bookingUrl } from '../config/site';
+import { sections } from '../data/home';
+
+const h = sections.contact;
+---
+
+<section class="sec on-white" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div class="ctc">
+      <div>
+        <span class="kicker kicker--heat rv">{h.kicker}</span>
+        <h2 class="d2 rv" style="--d:60ms" id="contact-title" set:html={h.title} />
+        <p class="lead muted rv" style="--d:120ms">{h.lead}</p>
+
+        <ul class="rv" style="--d:180ms">
+          <li class="ci">
+            <span class="ci__i" aria-hidden="true"><Icon name="time" /></span>
+            <div><b>On the call</b><p>What happens today when a call, a web form or an ad lead comes in after hours. Who answers, how fast, and where it gets written down.</p></div>
+          </li>
+          <li class="ci">
+            <span class="ci__i" aria-hidden="true"><Icon name="check-circle" /></span>
+            <div><b>After the call</b><p>You'll know whether there's anything worth fixing. Fees and the monthly rate are covered on the call.</p></div>
+          </li>
+          <li class="ci">
+            <span class="ci__i" aria-hidden="true"><Icon name="mail" /></span>
+            <div><b>Email</b><p>{siteConfig.email ? <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a> : <Placeholder>contact email</Placeholder>}</p></div>
+          </li>
+          <li class="ci">
+            <span class="ci__i" aria-hidden="true"><Icon name="linkedin" /></span>
+            <div><b>Stephen Adeniji, founder</b><p><a href="https://www.linkedin.com/in/practiceop" rel="noopener">linkedin.com/in/practiceop</a></p></div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sched rv" style="--d:120ms" id="schedule">
+        {bookingUrl ? (
+          <iframe src={bookingUrl} title="Book a 25-minute intake audit" loading="lazy"></iframe>
+        ) : (
+          <>
+            <h3>{siteConfig.cta.label}</h3>
+            <p><Placeholder>booking URL. Founder must confirm cal.com/practiceop/audit or Calendly</Placeholder></p>
+            <p class="muted">The scheduler appears here once the booking link is set in src/config/site.ts.</p>
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

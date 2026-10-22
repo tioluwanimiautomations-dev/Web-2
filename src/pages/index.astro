@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Solutions from '../components/Solutions.astro';
+import Platform from '../components/Platform.astro';
+import Process from '../components/Process.astro';
+import Pilot from '../components/Pilot.astro';
+import InsightsPreview from '../components/InsightsPreview.astro';
+import FAQ from '../components/FAQ.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import { hero } from '../data/home';
+import { url } from '../utils/url';
+---
+
+<BaseLayout preloadImage={url(hero.image)}>
+  <Hero />
+  <Solutions />
+  <Process />
+  <Platform />
+  <InsightsPreview />
+  <Pilot />
+  <FAQ />
+  <ContactCTA />
+  <FinalCTA />
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+/** Free resources on the home page (ST's insights preview). */
+import SectionHeading from './SectionHeading.astro';
+import PostCard from './PostCard.astro';
+import Button from './Button.astro';
+import { sections } from '../data/home';
+import { getResources } from '../utils/resources';
+
+interface Props {
+  limit?: number;
+}
+
+const { limit = 3 } = Astro.props;
+const items = (await getResources()).slice(0, limit);
+---
+
+{items.length > 0 && (
+  <section class="sec on-white" id="resources" aria-labelledby="resources-title">
+    <div class="wrap">
+      <SectionHeading heading={sections.insights} id="resources-title" />
+      <div class="posts">
+        {items.map((r, i) => <PostCard post={r} delay={i * 80} />)}
+      </div>
+      <div class="insights__more rv">
+        <Button href="/resources" variant="oink">All free resources</Button>
+      </div>
+    </div>
+  </section>
+)}

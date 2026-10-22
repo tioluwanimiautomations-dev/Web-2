@@ -1,0 +1,41 @@
+---
+/** Founding firm pilot: ST's split layout with the checklist, carrying the pilot terms. No prices. */
+import Button from './Button.astro';
+import Icon from './icons/Icon.astro';
+import Placeholder from './Placeholder.astro';
+import { siteConfig } from '../config/site';
+import { sections, pilotTerms } from '../data/home';
+
+const h = sections.pilot;
+---
+
+<section class="sec on-cream" id="pilot" aria-labelledby="pilot-title">
+  <div class="wrap">
+    <div class="split split--top">
+      <div>
+        <span class="kicker kicker--heat rv">{h.kicker}</span>
+        <h2 class="d2 rv" style="--d:60ms" id="pilot-title" set:html={h.title} />
+        <p class="lead muted rv" style="--d:120ms">{h.lead}</p>
+        <p class="pilot__note rv" style="--d:160ms">
+          The guarantee covers leads captured. Not cases signed, retainers won or fees earned. Whether a lead becomes a client is the attorney's decision.
+        </p>
+        <div class="pilot__slots rv" style="--d:200ms">
+          <b><Placeholder>3 or 5, founder to confirm</Placeholder> founding slots</b>
+          <span>Florida and Texas. Founding slots close on 15 December 2026.</span>
+        </div>
+        <div class="btns rv" style="--d:240ms">
+          <Button href={siteConfig.cta.href} variant="heat">{siteConfig.cta.label}</Button>
+        </div>
+      </div>
+
+      <ul class="checks rv" style="--d:120ms">
+        {pilotTerms.map((t) => (
+          <li>
+            <Icon name="check-circle" />
+            <div><b>{t.title}</b><span>{t.body}</span></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

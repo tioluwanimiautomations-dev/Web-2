@@ -1,0 +1,17 @@
+---
+/** Typographic cover for a free resource: a field of green with its kind and title. No stock photo. */
+import type { Resource } from '../utils/resources';
+
+interface Props {
+  resource: Resource;
+}
+
+const { resource } = Astro.props;
+const shade = ((resource.data.order - 1) % 5) + 1;
+---
+
+<div class:list={['rcover', `rcover--${shade}`]} aria-hidden="true">
+  <span class="rcover__k">{resource.data.category}</span>
+  <span class="rcover__t">{resource.data.title}</span>
+  <span class="rcover__n">{resource.data.order}</span>
+</div>

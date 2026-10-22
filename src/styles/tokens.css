@@ -1,0 +1,50 @@
+/* ===========================================================
+   PracticeOp, built on ST AI Agency (StrivioThemes, MIT)
+   Design tokens: shades of green
+   Change the palette, type and layout scale here.
+   =========================================================== */
+
+:root {
+  /* greens: deep forest to pale sage (ST's "heat" token names kept so every component recolours) */
+  --o900: #0C3324;
+  --o800: #10412E;
+  --o700: #155238;
+  --o600: #1B6545;
+  --o500: #267A55;
+  --o400: #A6E8C4; /* mint accent, used on the dark green bands */
+  --o300: #7DBF9F;
+  --o200: #BFE0CE;
+  --o100: #E4F2EA;
+
+  /* neutrals */
+  --cream: #F4F8F5;
+  --cream-2: #E7F0EA;
+  --white: #FFFFFF;
+  --ink: #0E1F17;
+  --ink-2: #1E3329;
+  --mute: #4B5E54;
+  --mute-l: #5E7268;
+
+  /* lines */
+  --hair: rgba(14, 31, 23, .12);
+  --hair-2: rgba(14, 31, 23, .22);
+  --hair-w: rgba(255, 255, 255, .30);
+  --hair-w2: rgba(255, 255, 255, .55);
+
+  /* type: self-hosted variable fonts (see README, Fonts) */
+  --display: 'Outfit Variable', 'Outfit', system-ui, sans-serif;
+  --body: 'Inter Tight Variable', 'Inter Tight', system-ui, -apple-system, sans-serif;
+
+  /* layout */
+  --wrap: 1600px;
+  --gut: 56px;
+  --ease: cubic-bezier(.22, .68, .16, 1);
+}
+
+@media (max-width: 1400px) {
+  :root { --gut: 40px; }
+}
+
+@media (max-width: 820px) {
+  :root { --gut: 22px; }
+}

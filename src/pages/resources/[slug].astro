@@ -1,0 +1,32 @@
+---
+import { render } from 'astro:content';
+import ResourceLayout from '../../layouts/ResourceLayout.astro';
+import { getResources, type Resource } from '../../utils/resources';
+
+export async function getStaticPaths() {
+  const items = await getResources();
+  return items.map((post, i) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      prev: items[i - 1],
+      next: items[i + 1],
+      related: items.filter((p) => p.id !== post.id).slice(0, 3),
+    },
+  }));
+}
+
+interface Props {
+  post: Resource;
+  prev?: Resource;
+  next?: Resource;
+  related: Resource[];
+}
+
+const { post, prev, next, related } = Astro.props;
+const { Content } = await render(post);
+---
+
+<ResourceLayout post={post} prev={prev} next={next} related={related}>
+  <Content />
+</ResourceLayout>

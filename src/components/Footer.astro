@@ -1,0 +1,54 @@
+---
+import Brand from './Brand.astro';
+import Icon from './icons/Icon.astro';
+import Placeholder from './Placeholder.astro';
+import { siteConfig } from '../config/site';
+import { footerColumns, legalLinks } from '../data/navigation';
+import { url } from '../utils/url';
+---
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <Brand variant="footer" />
+        <p>{siteConfig.footerBlurb}</p>
+        {siteConfig.social.length > 0 && (
+          <ul class="soc">
+            {siteConfig.social.map((s) => (
+              <li>
+                <a href={url(s.href)} aria-label={s.label} rel={/^https?:/.test(s.href) ? 'noopener' : undefined}>
+                  <Icon name={s.icon} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {footerColumns.map((col) => (
+        <nav class="fcol" aria-labelledby={`f-${col.title.toLowerCase()}`}>
+          <h2 id={`f-${col.title.toLowerCase()}`}>{col.title}</h2>
+          {col.links.map((l) => <a href={url(l.href)}>{l.label}</a>)}
+        </nav>
+      ))}
+
+      <div class="fcol">
+        <h2>Contact</h2>
+        <a href={url(siteConfig.cta.href)}>{siteConfig.cta.label}</a>
+        {siteConfig.email ? <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a> : <span class="fcol__ph">Email: <Placeholder>contact email</Placeholder></span>}
+        <address>{siteConfig.location.label}: {siteConfig.location.lines.length ? siteConfig.location.lines.join(', ') : <Placeholder>mailing address, only once the founder confirms it is live</Placeholder>}</address>
+      </div>
+    </div>
+
+    <div class="fbot">
+      <p>{siteConfig.copyright}</p>
+      <p class="fcredit">Hero photo: <a href="https://commons.wikimedia.org/wiki/File:New_York_City_at_night_HDR.jpg" rel="noopener">New York City at night HDR</a> by Paulo Barcellos Jr., <a href="https://creativecommons.org/licenses/by-sa/2.0/" rel="noopener">CC BY-SA 2.0</a>, recoloured.</p>
+      {legalLinks.length > 0 && (
+        <ul class="fleg">
+          {legalLinks.map((l) => <li><a href={url(l.href)}>{l.label}</a></li>)}
+        </ul>
+      )}
+    </div>
+  </div>
+</footer>

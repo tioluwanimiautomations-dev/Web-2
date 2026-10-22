@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import PostCard from '../../components/PostCard.astro';
+import ResourceCover from '../../components/ResourceCover.astro';
+import Icon from '../../components/icons/Icon.astro';
+import { sections } from '../../data/home';
+import { getResources, statusLabel } from '../../utils/resources';
+import { absoluteUrl, url } from '../../utils/url';
+
+const posts = await getResources();
+const featured = posts[0];
+const rest = posts.slice(1);
+const categories = [...new Set(rest.map((p) => p.data.category))].sort();
+
+const title = 'Free resources';
+const description = 'Free spreadsheets, text templates and guides for criminal defense firms. No email, no login.';
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/', Astro.site) },
+      { '@type': 'ListItem', position: 2, name: title, item: absoluteUrl('/resources', Astro.site) },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} schema={schema} pitch={false}>
+  <PageHero
+    kicker={sections.insights.kicker}
+    title={sections.insights.title}
+    lead={sections.insights.lead}
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: title, href: '/resources' }]}
+  />
+
+  <section class="sec on-cream" aria-label="Resources">
+    <div class="wrap">
+      {featured && (
+        <article class="feat rv">
+          <div class="feat__i"><ResourceCover resource={featured} /></div>
+          <div>
+            <span class="feat__badge">{statusLabel(featured)}</span>
+            <div class="post__m">
+              <em>{featured.data.category}</em>
+            </div>
+            <h2 class="d3"><a href={url(`/resources/${featured.id}`)}>{featured.data.title}</a></h2>
+            <p class="lead">{featured.data.description}</p>
+            <span class="arrow arrow--heat" aria-hidden="true"><span>Open the resource</span><Icon name="arrow-right" /></span>
+          </div>
+        </article>
+      )}
+
+      {rest.length > 0 && (
+        <>
+          <div class="bloghead">
+            <h2 id="all-posts">All free resources</h2>
+            <div class="chips" role="group" aria-label="Filter by category" data-filter hidden>
+              <button class="chip" type="button" aria-pressed="true" data-cat="">All</button>
+              {categories.map((c) => <button class="chip" type="button" aria-pressed="false" data-cat={c}>{c}</button>)}
+            </div>
+          </div>
+          <div class="posts posts--grid" data-posts>
+            {rest.map((post, i) => <PostCard post={post} level="h3" delay={(i % 3) * 80} />)}
+          </div>
+          <p class="sr-only" role="status" aria-live="polite" data-filter-status></p>
+        </>
+      )}
+
+      {posts.length === 0 && <p class="blog-empty">No resources yet. Add Markdown files to src/content/resources.</p>}
+      <p class="res-note rv">Made by Stephen Adeniji, PracticeOp. Questions or want a second pair of eyes on your numbers? <a href={url('/#contact')}>Get in touch</a>.</p>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  // Progressive enhancement: the category filter only appears when JavaScript runs.
+  const group = document.querySelector<HTMLElement>('[data-filter]');
+  const grid = document.querySelector<HTMLElement>('[data-posts]');
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  if (group && grid) {
+    group.hidden = false;
+    const chips = Array.from(group.querySelectorAll<HTMLButtonElement>('.chip'));
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('.post'));
+    chips.forEach((chip) =>
+      chip.addEventListener('click', () => {
+        const cat = chip.dataset.cat ?? '';
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        let shown = 0;
+        cards.forEach((card) => {
+          const match = !cat || card.dataset.category === cat;
+          card.hidden = !match;
+          if (match) {
+            shown++;
+            card.classList.add('in');
+          }
+        });
+        if (status) status.textContent = shown + (shown === 1 ? ' resource' : ' resources') + ' shown' + (cat ? ' in ' + cat : '') + '.';
+      }),
+    );
+  }
+</script>

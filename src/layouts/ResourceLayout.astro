@@ -1,0 +1,121 @@
+---
+/** One free resource page (ST's article layout). No booking pitch on these pages (brief 4.4). */
+import BaseLayout from './BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import PostCard from '../components/PostCard.astro';
+import ResourceCover from '../components/ResourceCover.astro';
+import Icon from '../components/icons/Icon.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { type Resource, statusLabel } from '../utils/resources';
+import { absoluteUrl, url } from '../utils/url';
+
+interface Props {
+  post: Resource;
+  prev?: Resource;
+  next?: Resource;
+  related: Resource[];
+}
+
+const { post, prev, next, related } = Astro.props;
+const { title, description, category, tags, status, link } = post.data;
+const pageUrl = absoluteUrl(`/resources/${post.id}`, Astro.site);
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/', Astro.site) },
+      { '@type': 'ListItem', position: 2, name: 'Free resources', item: absoluteUrl('/resources', Astro.site) },
+      { '@type': 'ListItem', position: 3, name: title, item: pageUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} schema={schema} pitch={false}>
+  <article>
+    <PageHero
+      title={title}
+      size="d2"
+      lead={description}
+      kicker={category}
+      breadcrumbs={[
+        { label: 'Home', href: '/' },
+        { label: 'Free resources', href: '/resources' },
+        { label: title, href: `/resources/${post.id}` },
+      ]}
+    >
+      <dl class="pmeta rv" style="--d:180ms">
+        <div><dt>Type</dt><dd>{category}</dd></div>
+        <div><dt>Status</dt><dd>{statusLabel(post)}</dd></div>
+        <div><dt>Cost</dt><dd>Free, no email</dd></div>
+      </dl>
+    </PageHero>
+
+    <div class="art on-cream">
+      <div class="wrap">
+        <figure class="art__fig art__fig--cover">
+          <ResourceCover resource={post} />
+        </figure>
+
+        <div class="art__body">
+          <div class="prose">
+            <slot />
+            {status === 'live' && link ? (
+              <p><a class="btn btn--heat" href={link} rel="noopener">Open the {category}</a></p>
+            ) : (
+              <p><span class="status-pill">Coming soon</span> <Placeholder>Google Sheet / Doc URL</Placeholder></p>
+            )}
+          </div>
+
+          <footer class="art__foot">
+            <div class="byline">
+              <b>Made by Stephen Adeniji, PracticeOp.</b>
+              <span>Questions or want a second pair of eyes on your numbers? <a href={url('/#contact')}>Get in touch</a>.</span>
+            </div>
+            {tags.length > 0 && (
+              <ul class="tags">
+                {tags.map((tag) => <li>{tag}</li>)}
+              </ul>
+            )}
+          </footer>
+        </div>
+
+        {(prev || next) && (
+          <nav class="pn" aria-label="More free resources">
+            {prev && (
+              <a href={url(`/resources/${prev.id}`)} rel="prev">
+                <span class="xs"><Icon name="arrow-left" /> Previous</span>
+                <span class="d5">{prev.data.title}</span>
+              </a>
+            )}
+            {next && (
+              <a href={url(`/resources/${next.id}`)} rel="next" class="pn__next">
+                <span class="xs">Next <Icon name="arrow-right" /></span>
+                <span class="d5">{next.data.title}</span>
+              </a>
+            )}
+          </nav>
+        )}
+      </div>
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <section class="sec on-white" aria-labelledby="related-title">
+      <div class="wrap">
+        <div class="shead">
+          <div>
+            <span class="kicker kicker--heat rv">More free resources</span>
+            <h2 class="d2 rv" style="--d:60ms" id="related-title">For the whole firm</h2>
+          </div>
+          <p class="lead muted shead__r rv" style="--d:120ms">No email, no login. Open it, make a copy, use it.</p>
+        </div>
+        <div class="posts">
+          {related.map((p, i) => <PostCard post={p} delay={i * 80} />)}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

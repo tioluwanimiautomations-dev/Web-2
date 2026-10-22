@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Button from '../components/Button.astro';
+import { siteConfig } from '../config/site';
+import { url } from '../utils/url';
+---
+
+<BaseLayout title="Page not found" description="The page you were looking for could not be found." noindex>
+  <PageHero
+    class="nf"
+    center
+    kicker="Page not found"
+    title="This page doesn't exist."
+    lead="It may have moved. The home page and the booking link still work."
+  >
+    <span slot="before" class="nf__code rv" aria-hidden="true">404</span>
+    <div class="btns rv" style="--d:190ms">
+      <Button href="/" variant="white">Back to the homepage</Button>
+      <Button href={siteConfig.cta.href} variant="ow">{siteConfig.cta.label}</Button>
+    </div>
+    <nav class="nf__links rv" style="--d:250ms" aria-label="Popular sections">
+      <a href={url('/#services')}>Systems</a>
+      <a href={url('/#process')}>How it works</a>
+      <a href={url('/#pilot')}>Founding pilot</a>
+      <a href={url('/resources')}>Free resources</a>
+      <a href={url('/#contact')}>Book a 25-minute intake audit</a>
+    </nav>
+  </PageHero>
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+/**
+ * PracticeOp monogram, drawn to sit where the ST AI Agency mark sat.
+ * `light`  for dark/green backgrounds (header).
+ * `footer` mint mark in a soft frame for the dark footer.
+ */
+interface Props {
+  variant?: 'light' | 'footer';
+}
+
+const { variant = 'light' } = Astro.props;
+const c =
+  variant === 'footer'
+    ? { frame: '#E4F2EA', frameOpacity: '.5', mark: '#A6E8C4' }
+    : { frame: '#fff', frameOpacity: '.65', mark: '#fff' };
+---
+
+<svg viewBox="0 0 36 36" fill="none" aria-hidden="true" focusable="false">
+  <rect x=".9" y=".9" width="34.2" height="34.2" rx="10" stroke={c.frame} stroke-width="1.4" opacity={c.frameOpacity}></rect>
+  <path d="M12 8.5h7.6a6 6 0 0 1 0 12h-3.9v7H12v-19Zm3.7 3.4v5.2h3.8a2.6 2.6 0 0 0 0-5.2h-3.8Z" fill={c.mark}></path>
+</svg>
