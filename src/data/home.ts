@@ -9,7 +9,7 @@ export const hero = {
     { text: 'run on voicemail,', tint: false },
     { text: 'paper and guesswork.', tint: true },
   ],
-  lead: 'I build the AI systems that replace them. Starting with intake: every call answered in English and Spanish, every signed case traced to its ad.',
+  lead: 'We build the AI systems that replace them. Starting with intake: every call answered in English and Spanish, every signed case traced to its ad.',
   primaryCta: { label: 'Book a 25-minute intake audit', href: '/#contact' },
   image: '/images/hero.webp',
   credentials: [
