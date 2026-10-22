@@ -1,6 +1,7 @@
 ---
 import Button from './Button.astro';
 import FrameLines from './FrameLines.astro';
+import CallButton from './CallButton.astro';
 import { siteConfig } from '../config/site';
 import { finalCta } from '../data/home';
 
@@ -21,7 +22,7 @@ const { kicker = finalCta.kicker, title = finalCta.title, lead = finalCta.lead }
     <p class="lead muted rv" style="--d:120ms">{lead}</p>
     <div class="btns rv" style="--d:180ms">
       <Button href={siteConfig.cta.href} variant="white">{siteConfig.cta.label}</Button>
-      <Button href="/#process" variant="ow">See how it works</Button>
+      <CallButton variant="ow" />
     </div>
   </div>
 </section>

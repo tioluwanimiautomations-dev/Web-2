@@ -451,3 +451,22 @@ body.menu-open { overflow: hidden; }
 .post__i .rcover, .feat__i .rcover { height: 100%; }
 .fcol__ph { display: block; padding: 7px 0; font-size: 15px; color: #A9C2B5; }
 .fcredit { flex-basis: 100%; order: 3; }
+
+/* call now: icon button in the header, phone icon in the big buttons */
+.callbtn {
+  display: grid; place-items: center; flex: none; width: 50px; height: 50px; margin-right: -20px;
+  border-radius: 9px; border: 1px solid var(--hair-w2); color: #fff; transition: background .3s var(--ease), transform .3s var(--ease);
+}
+.callbtn:hover { background: rgba(255, 255, 255, .14); transform: translateY(-2px); }
+.btn--call { white-space: nowrap; }
+.btn--call .ph { margin-left: 2px; font-family: var(--body); font-size: 12px; }
+@media (max-width: 520px) { .btn--call { padding: 0 20px; gap: 8px; } .btn--call .ph { font-size: 11px; } }
+/* the five nav links, the call icon and the booking button only fit on one line above 1380px */
+.mainnav a, .hdr .btn { white-space: nowrap; }
+@media (max-width: 1380px) {
+  .mainnav { display: none; }
+  .burger { display: block; }
+  .callbtn { margin-left: auto; }
+  .hdr .callbtn ~ .btn--ow { margin-left: 0; }
+}
+@media (max-width: 820px) { .callbtn { margin-right: 0; } .hdr .callbtn ~ .burger { margin-left: 0; } }

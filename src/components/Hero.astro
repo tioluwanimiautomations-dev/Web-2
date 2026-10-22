@@ -2,6 +2,7 @@
 import Button from './Button.astro';
 import FrameLines from './FrameLines.astro';
 import Icon from './icons/Icon.astro';
+import CallButton from './CallButton.astro';
 import { hero, heroProblems } from '../data/home';
 import { url } from '../utils/url';
 ---
@@ -35,7 +36,7 @@ import { url } from '../utils/url';
         <p class="lead hero__lead rv" style="--d:130ms">{hero.lead}</p>
         <div class="btns rv" style="--d:190ms">
           <Button href={hero.primaryCta.href} variant="white">{hero.primaryCta.label}</Button>
-          <Button href={hero.secondaryCta.href} variant="ow">{hero.secondaryCta.label}</Button>
+          <CallButton variant="ow" />
         </div>
         <ul class="hero__cred rv" style="--d:250ms">
           {hero.credentials.map((c) => (

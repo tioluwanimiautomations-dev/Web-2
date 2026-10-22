@@ -1,5 +1,6 @@
 ---
 import Brand from './Brand.astro';
+import CallButton from './CallButton.astro';
 import { mainNav } from '../data/navigation';
 import { siteConfig } from '../config/site';
 import { url } from '../utils/url';
@@ -24,6 +25,7 @@ const path = Astro.url.pathname;
           ))}
         </ul>
       </nav>
+      {pitch && <CallButton iconOnly />}
       {pitch ? <a href={url(siteConfig.cta.href)} class="btn btn--ow">{siteConfig.cta.shortLabel}</a> : <a href={url('/#contact')} class="btn btn--ow">Contact</a>}
       <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mob">
         <span></span><span></span><span></span>

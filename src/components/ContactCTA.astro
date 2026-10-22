@@ -26,6 +26,10 @@ const h = sections.contact;
             <div><b>After the call</b><p>You'll know whether there's anything worth fixing. Fees and the monthly rate are covered on the call.</p></div>
           </li>
           <li class="ci">
+            <span class="ci__i" aria-hidden="true"><Icon name="phone" /></span>
+            <div><b>Call now</b><p>{siteConfig.phone ? <a href={`tel:${siteConfig.phoneHref}`}>{siteConfig.phone}</a> : <Placeholder>phone number</Placeholder>}</p></div>
+          </li>
+          <li class="ci">
             <span class="ci__i" aria-hidden="true"><Icon name="mail" /></span>
             <div><b>Email</b><p>{siteConfig.email ? <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a> : <Placeholder>contact email</Placeholder>}</p></div>
           </li>

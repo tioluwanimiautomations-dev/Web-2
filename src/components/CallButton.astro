@@ -1,0 +1,30 @@
+---
+/**
+ * "Call now": dials siteConfig.phoneHref. Until the founder adds a number it links to the
+ * contact section and shows a visible placeholder, so it never dead-ends.
+ */
+import Icon from './icons/Icon.astro';
+import Placeholder from './Placeholder.astro';
+import { siteConfig } from '../config/site';
+import { url } from '../utils/url';
+
+interface Props {
+  variant?: 'ow' | 'oink' | 'heat' | 'white';
+  /** Round icon-only button (header). */
+  iconOnly?: boolean;
+  class?: string;
+}
+
+const { variant = 'ow', iconOnly = false, class: className } = Astro.props;
+const { phone, phoneHref, callLabel } = siteConfig;
+const href = phoneHref ? 'tel:' + phoneHref : url('/#contact');
+const label = phone ? callLabel + ', ' + phone : callLabel;
+---
+
+{iconOnly ? (
+  <a href={href} class:list={['callbtn', className]} aria-label={label} title={label}><Icon name="phone" /></a>
+) : (
+  <a href={href} class:list={['btn', 'btn--' + variant, 'btn--call', className]} aria-label={phone ? label : undefined}>
+    <Icon name="phone" />{callLabel}{!phone && <Placeholder>phone number</Placeholder>}
+  </a>
+)}

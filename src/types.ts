@@ -31,6 +31,8 @@ export interface SiteConfig {
   phone: string;
   /** Phone in a dialable format for tel: links. */
   phoneHref: string;
+  /** Label on every call button. */
+  callLabel: string;
   location: { label: string; lines: string[] };
   responseTime: string;
   /** Short footer blurb under the logo. */

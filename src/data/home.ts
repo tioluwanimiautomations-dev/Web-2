@@ -11,7 +11,6 @@ export const hero = {
   ],
   lead: 'I build the AI systems that replace them. Starting with intake: every call answered in English and Spanish, every signed case traced to its ad.',
   primaryCta: { label: 'Book a 25-minute intake audit', href: '/#contact' },
-  secondaryCta: { label: 'See how it works', href: '/#process' },
   image: '/images/hero.webp',
   credentials: [
     { icon: 'clock', label: 'Answered 24/7' },

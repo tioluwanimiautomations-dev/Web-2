@@ -15,9 +15,11 @@ export const siteConfig: SiteConfig = {
 
   // [PLACEHOLDER: contact email]
   email: '',
-  // No phone number unless the founder supplies one.
+  // [PLACEHOLDER: phone number] Fill both and every Call now button dials it,
+  // e.g. phone: '+1 (813) 555-0123', phoneHref: '+18135550123'.
   phone: '',
   phoneHref: '',
+  callLabel: 'Call now',
   location: {
     label: 'Mailing address',
     // [PLACEHOLDER: mailing address, only once the founder confirms it is live]

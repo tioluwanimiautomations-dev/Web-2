@@ -1,4 +1,5 @@
 ---
+import CallButton from './CallButton.astro';
 import { mobileNav } from '../data/navigation';
 import { siteConfig } from '../config/site';
 import { url } from '../utils/url';
@@ -20,4 +21,5 @@ const path = Astro.url.pathname;
     ))}
   </nav>
   {pitch && <a href={url(siteConfig.cta.href)} class="btn btn--heat">{siteConfig.cta.label}</a>}
+  {pitch && <CallButton variant="ow" />}
 </div>
