@@ -19,7 +19,7 @@ export interface SocialLink {
 export interface SiteConfig {
   /** Full site name, used in titles and structured data. */
   name: string;
-  /** Logo word mark, split so the middle part can be dimmed like the original design. */
+  /** Wordmark, split so the accent part takes the mint colour. */
   brand: { prefix: string; accent: string; suffix: string };
   tagline: string;
   description: string;
