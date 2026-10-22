@@ -1,6 +1,6 @@
 /**
  * ST AI Agency — site-wide behaviour (vanilla, ~2.5 KB minified).
- * Sticky header · mobile menu · scroll reveal · hero drift · demo-safe forms
+ * Sticky header · mobile menu · scroll reveal · hero drift · demo-safe forms · example phones
  */
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -149,4 +149,100 @@ document.querySelectorAll<HTMLFormElement>('form.js-form').forEach((form) => {
         'Demo mode: this form is not connected yet, so nothing was sent. Connect a form provider in src/config/site.ts.';
     }
   });
+});
+
+/* ---------- example phones: Approve / Decline show what would happen ---------- */
+document.querySelectorAll<HTMLElement>('[data-attorney-phone]').forEach((phone) => {
+  const buttons = phone.querySelectorAll<HTMLButtonElement>('[data-choice]');
+  const outcomes = phone.querySelectorAll<HTMLElement>('[data-outcome]');
+  outcomes.forEach((o) => (o.hidden = true));
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      outcomes.forEach((o) => (o.hidden = o.dataset.outcome !== b.dataset.choice));
+      // inside a scrolling app screen, bring the result into view like the app would
+      const pane = b.closest<HTMLElement>('.slack__feed, .mail__msg');
+      if (pane) pane.scrollTo({ top: pane.scrollHeight, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    }),
+  );
+});
+
+/* ---------- phone deck: the approval arrives in Slack, then by email, once ----------
+ * Phones see the two screens as a swipe deck with two tabs; wider screens see them side by side.
+ * Without JavaScript, or with reduced motion, every line is simply there.
+ */
+const wait = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
+
+document.querySelectorAll<HTMLElement>('[data-deck]').forEach((deck) => {
+  const track = deck.querySelector<HTMLElement>('[data-deck-track]');
+  const cards = Array.from(deck.querySelectorAll<HTMLElement>('.door'));
+  const tabs = Array.from(deck.querySelectorAll<HTMLButtonElement>('[data-deck-tab]'));
+  const inboxes = Array.from(deck.querySelectorAll<HTMLElement>('[data-attorney-phone]'));
+  if (!track || cards.length < 2) return;
+
+  const offset = (i: number) => cards[i].offsetLeft - cards[0].offsetLeft;
+  const goTo = (i: number) => track.scrollTo({ left: offset(i), behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+  const setTab = (i: number) => tabs.forEach((t, j) => t.setAttribute('aria-pressed', String(i === j)));
+
+  // the lit tab follows the scroll, except right after a tap (the last card can't scroll to the left edge)
+  let pinnedTab = -1;
+  let pinTimer = 0;
+  track.addEventListener(
+    'scroll',
+    () => {
+      if (pinnedTab >= 0) return;
+      const step = offset(1) || 1;
+      setTab(Math.max(0, Math.min(cards.length - 1, Math.round(track.scrollLeft / step))));
+    },
+    { passive: true },
+  );
+
+  let touched = false;
+  const markTouched = () => {
+    touched = true;
+    inboxes.forEach((el) => el.classList.add('arrived'));
+  };
+  ['pointerdown', 'touchstart', 'wheel'].forEach((type) => track.addEventListener(type, markTouched, { passive: true }));
+  tabs.forEach((t, i) =>
+    t.addEventListener('click', () => {
+      markTouched();
+      pinnedTab = i;
+      setTab(i);
+      window.clearTimeout(pinTimer);
+      pinTimer = window.setTimeout(() => (pinnedTab = -1), 900);
+      goTo(i);
+    }),
+  );
+
+  if (reduceMotion.matches || !('IntersectionObserver' in window)) return;
+  inboxes.forEach((el) => el.classList.add('is-seq'));
+
+  const play = async () => {
+    for (let i = 0; i < inboxes.length && !touched; i++) {
+      await wait(i === 0 ? 500 : 2200);
+      if (touched) break;
+      const card = inboxes[i].closest<HTMLElement>('.door');
+      const index = card ? cards.indexOf(card) : -1;
+      // scroll only if that phone isn't already fully on screen
+      if (card && index > 0) {
+        const left = card.offsetLeft - track.scrollLeft - cards[0].offsetLeft;
+        if (left < 0 || left + card.offsetWidth > track.clientWidth - cards[0].offsetLeft + 1) {
+          goTo(index);
+          await wait(450);
+        }
+      }
+      inboxes[i].classList.add('arrived');
+    }
+  };
+  const io = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        io.disconnect();
+        play();
+      }
+    },
+    { threshold: 0.55 },
+  );
+  // start when the first phone is mostly on screen, so the visitor actually sees it land
+  io.observe(cards[0]);
 });

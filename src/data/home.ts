@@ -84,12 +84,6 @@ export const pilotTerms = [
   },
 ];
 
-export const platformImage = {
-  src: '/images/control.webp',
-  alt: '',
-  tag: 'Example: approve or decline by text',
-};
-
 /** Call-to-action band above the footer. */
 export const finalCta = {
   kicker: 'Founding slots close 15 December 2026',

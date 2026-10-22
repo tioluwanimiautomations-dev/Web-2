@@ -1,0 +1,138 @@
+/* ===========================================================
+   Example devices: plain phones running native-looking apps (ported from option 1).
+   These are interface fragments (data-ui): inside the phone they keep the look of
+   the apps they show, not the PracticeOp greens. Every one is labeled "Example".
+   =========================================================== */
+
+:root {
+  --sys: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --door: 280px;
+  --door-gap: 20px;
+}
+
+/* ---------- the phone ---------- */
+.device {
+  background: #0c0c0d; border-radius: 46px; padding: 9px;
+  box-shadow: 0 0 0 1px #2c2c2e, 0 30px 54px -26px rgba(12, 51, 36, .55); /* taste-skill-ignore: device bezel */
+}
+.device__screen { position: relative; height: 600px; border-radius: 38px; overflow: hidden; display: flex; flex-direction: column; font-family: var(--sys); }
+.device__status { flex: none; display: flex; align-items: center; justify-content: space-between; height: 42px; padding: 0 22px 0 30px; font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+.device__island { width: 88px; height: 26px; border-radius: 20px; background: #000; }
+.device__icons { display: flex; align-items: center; gap: 5px; }
+.device__icons svg { fill: currentColor; }
+.device__screen--slack { background: #3f0e40; color: #fff; }
+.device__screen--mail { background: #fff; color: #000; }
+.device .screen { flex: 1; min-height: 0; border-radius: 0; }
+
+/* ---------- any example screen ---------- */
+.screen { position: relative; display: flex; flex-direction: column; overflow: hidden; font-family: var(--sys); font-size: 15px; line-height: 1.35; }
+.screen p { margin: 0; }
+.screen dl, .screen dd { margin: 0; }
+.screen .tag { align-self: flex-start; font-family: var(--body); font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 999px; background: #efeff4; color: #3c3c43; }
+.screen button { font-family: var(--sys); }
+.choices button { cursor: pointer; transition: transform .14s var(--ease), filter .18s var(--ease); }
+.choices button:hover { filter: brightness(.96); }
+.choices button:active { transform: scale(.97); }
+.choices button[aria-pressed="true"] { outline: 3px solid currentColor; outline-offset: 2px; }
+.js .outcome[hidden] { display: none; }
+
+/* ---------- team chat screen ---------- */
+.screen--slack { background: #fff; color: #1d1c1d; }
+.slack__bar { flex: none; display: flex; align-items: center; gap: 10px; padding: 4px 14px 12px; background: #3f0e40; color: #fff; }
+.slack__back svg { width: 22px; height: 22px; }
+.slack__title strong { display: block; font-size: 16px; font-weight: 700; }
+.slack__title small { font-size: 13px; opacity: .78; }
+.slack__feed { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; padding: 10px 14px 12px; overflow-y: auto; scrollbar-width: none; }
+.slack__feed > * { flex: none; }
+.slack__feed::-webkit-scrollbar, .mail__msg::-webkit-scrollbar { display: none; }
+.slack__day { align-self: center; font-size: 13px; font-weight: 700; color: #616061; background: #f8f8f8; padding: 2px 12px; border-radius: 999px; }
+.slack__msg { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 9px; font-size: 14px; }
+.slack__avatar { width: 34px; height: 34px; border-radius: 8px; background: #2b2b2e; color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 17px; }
+.slack__who { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.slack__who strong { font-weight: 800; }
+.slack__app { font-size: 11px; font-weight: 700; color: #616061; background: #ebebeb; padding: 1px 4px; border-radius: 3px; vertical-align: 1px; }
+.slack__who time { font-size: 13px; color: #616061; }
+.slack__text { margin-top: 2px; }
+.slack__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; margin-top: 6px; padding-left: 10px; box-shadow: inset 4px 0 0 #dddddd; } /* taste-skill-ignore: chat attachment bar */
+.slack__fields dt { font-size: 13px; font-weight: 700; }
+.slack__fields dd { font-size: 13.5px; line-height: 1.3; }
+.slack__actions { display: flex; gap: 8px; margin-top: 10px; }
+.slack__actions button { min-height: 40px; padding: 7px 16px; border-radius: 6px; font-size: 15px; font-weight: 700; background: #fff; color: #1d1c1d; border: 1px solid rgba(29, 28, 29, .3); } /* taste-skill-ignore: native button */
+.slack__actions .approve { background: #007a5a; border-color: #007a5a; color: #fff; }
+.slack__actions .decline { color: #c4164f; }
+.slack__result { margin-top: 10px; font-size: 14px; background: #f8f8f8; padding: 8px 10px; border-radius: 6px; }
+.slack__composer { flex: none; margin: 0 12px 16px; padding: 11px 12px; border-radius: 10px; font-size: 15px; color: #616061; box-shadow: inset 0 0 0 1px #dddddd; } /* taste-skill-ignore: native input */
+
+/* ---------- mail screen ---------- */
+.screen--mail { background: #fff; color: #000; }
+.mail__bar { flex: none; display: flex; align-items: center; justify-content: space-between; padding: 2px 10px 8px 6px; color: #0066d6; font-size: 17px; }
+.mail__back { display: flex; align-items: center; }
+.mail__back svg { width: 26px; height: 26px; }
+.mail__nav { display: flex; gap: 14px; }
+.mail__nav svg { width: 24px; height: 24px; }
+.mail__msg { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 9px; padding: 2px 16px 12px; overflow-y: auto; scrollbar-width: none; }
+.mail__msg > * { flex: none; }
+.mail__subject { margin: 0; font-family: var(--sys); font-size: 18px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
+.mail__from { display: flex; align-items: center; gap: 10px; }
+.mail__avatar { width: 36px; height: 36px; border-radius: 50%; background: #8e8e93; color: #fff; display: grid; place-items: center; font-weight: 600; }
+.mail__from strong { display: block; font-size: 15px; }
+.mail__from small { font-size: 13px; color: #6c6c70; }
+.mail__fields { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 12px; font-size: 13.5px; background: #f2f2f7; padding: 10px 12px; border-radius: 10px; }
+.mail__fields div { display: contents; }
+.mail__fields dt { color: #6c6c70; }
+.mail__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mail__actions button { min-height: 42px; border: 0; border-radius: 10px; font-size: 15px; font-weight: 600; background: #e5e5ea; color: #000; }
+.mail__actions .approve { background: #0066d6; color: #fff; }
+.mail__result { font-size: 14px; background: #f2f2f7; padding: 8px 10px; border-radius: 10px; }
+.mail__toolbar { flex: none; display: flex; justify-content: space-around; padding: 8px 0 16px; background: #f9f9f9; color: #0066d6; }
+.mail__toolbar svg { width: 24px; height: 24px; }
+
+/* ---------- play-once motion: the request lands, then the buttons nudge ---------- */
+.js .screen.is-seq .notify { opacity: 0; transform: translateY(-22px) scale(.96); transition: opacity .45s var(--ease), transform .55s cubic-bezier(.2, 1.3, .4, 1); }
+.js .screen.is-seq.arrived .notify { opacity: 1; transform: none; }
+.js .screen.is-seq .choices { opacity: 0; transition: opacity .4s var(--ease) .3s; }
+.js .screen.is-seq.arrived .choices { opacity: 1; }
+.screen.arrived .choices button { animation: nudge .6s var(--ease) .6s both; }
+.screen.arrived .choices .decline { animation-delay: .75s; }
+@keyframes nudge { 50% { transform: scale(1.05); } }
+@media (prefers-reduced-motion: reduce) { .screen.arrived .choices button { animation: none; } }
+
+/* ---------- "You stay in control": the two phones on ST's arch ---------- */
+.split.split--deck { grid-template-columns: minmax(0, 1fr) auto; }
+.split__deck { position: relative; min-width: 0; padding: 56px 32px 0; }
+.split__deck::before {
+  content: ""; position: absolute; inset: 0 0 96px; z-index: 0;
+  border-radius: 200px 200px 20px 20px;
+  background: linear-gradient(180deg, var(--o100), var(--cream));
+}
+.deck { position: relative; z-index: 1; min-width: 0; }
+.deck__tabs { display: none; }
+.js .deck__tabs { display: inline-flex; gap: 4px; margin-bottom: 18px; padding: 4px; border-radius: 999px; background: var(--white); box-shadow: 0 0 0 1px var(--hair); }
+.deck__tabs button { border: 0; background: transparent; color: var(--ink); min-height: 40px; padding: 8px 20px; border-radius: 999px; font-family: var(--display); font-size: 15px; font-weight: 500; cursor: pointer; transition: background-color .2s var(--ease), color .2s var(--ease); }
+.deck__tabs button[aria-pressed="true"] { background: var(--o700); color: var(--white); }
+.doors {
+  position: relative; display: flex; gap: var(--door-gap); width: calc(var(--door) * 2 + var(--door-gap)); max-width: 100%;
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
+  padding: 4px 0 10px;
+}
+.doors::-webkit-scrollbar { display: none; }
+.door { flex: 0 0 var(--door); min-width: 0; margin: 0; scroll-snap-align: start; }
+.door figcaption { margin-top: 16px; }
+.door figcaption strong { display: block; font-family: var(--display); font-weight: 500; font-size: 18px; color: var(--ink); }
+.door figcaption span { display: block; font-size: 15px; color: var(--mute); }
+
+/* below 1180px the checklist and the phones stack, so both phones keep their full width */
+@media (max-width: 1180px) {
+  .split.split--deck { grid-template-columns: minmax(0, 1fr); gap: 56px; }
+  .split__deck { justify-self: start; }
+}
+@media (min-width: 681px) { .js .deck__tabs { display: none; } }
+
+/* phones: one phone at a time, swiped, edge to edge, with the tabs */
+@media (max-width: 680px) {
+  .split__deck { justify-self: stretch; padding: 36px 0 0; }
+  .split__deck::before { inset: 0 0 120px; border-radius: 140px 140px 20px 20px; }
+  .deck { text-align: center; }
+  .doors { text-align: left; width: calc(100% + var(--gut) * 2); max-width: none; gap: 14px; margin: 0 calc(var(--gut) * -1); padding: 4px var(--gut) 10px; scroll-padding-inline: var(--gut); }
+  .door { flex-basis: 84%; }
+}

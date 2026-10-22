@@ -1,14 +1,17 @@
 ---
+/** You stay in control: the checklist beside the approval request as it lands in Slack and email. */
 import FeatureList from './FeatureList.astro';
-import { sections, platformImage } from '../data/home';
-import { url } from '../utils/url';
+import DeviceFrame from './DeviceFrame.astro';
+import SlackPhone from './SlackPhone.astro';
+import EmailPhone from './EmailPhone.astro';
+import { sections } from '../data/home';
 
 const h = sections.platform;
 ---
 
 <section class="sec on-white" id="platform" aria-labelledby="platform-title">
   <div class="wrap">
-    <div class="split">
+    <div class="split split--deck">
       <div>
         <span class="kicker kicker--heat rv">{h.kicker}</span>
         <h2 class="d2 rv" style="--d:60ms" id="platform-title" set:html={h.title} />
@@ -16,9 +19,23 @@ const h = sections.platform;
         <FeatureList />
       </div>
 
-      <div class="split__img rv" style="--d:100ms">
-        <img src={url(platformImage.src)} alt={platformImage.alt} width="696" height="800" loading="lazy" decoding="async" />
-        <span class="split__tag">{platformImage.tag}</span>
+      <div class="split__deck rv" style="--d:100ms">
+        <div class="deck" data-deck>
+          <div class="deck__tabs" role="group" aria-label="Example screens">
+            <button type="button" data-deck-tab="0" aria-pressed="true">Slack</button>
+            <button type="button" data-deck-tab="1" aria-pressed="false">Email</button>
+          </div>
+          <div class="doors" data-deck-track>
+            <figure class="door">
+              <DeviceFrame time="11:44" theme="slack"><SlackPhone /></DeviceFrame>
+              <figcaption><strong>In Slack</strong><span>Approve or decline from the channel.</span></figcaption>
+            </figure>
+            <figure class="door">
+              <DeviceFrame time="11:44" theme="mail"><EmailPhone /></DeviceFrame>
+              <figcaption><strong>By email</strong><span>The same decision in your inbox.</span></figcaption>
+            </figure>
+          </div>
+        </div>
       </div>
     </div>
   </div>
